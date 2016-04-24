@@ -8,6 +8,9 @@ import {SiteSuggest} from './site_suggest'
 import 'whatwg-fetch'
 const Plotly = require('react-plotlyjs');
 
+const API_KEY = '6A7F1BDCC2E94496BAAAEBCDC8B17CE3'
+const BASE_URL = 'https://ridb.recreation.gov/api/v1/'
+
 class AppComponent extends React.Component {
 
   handleSuggestSelect(event, value) {
@@ -16,13 +19,15 @@ class AppComponent extends React.Component {
   }
 
   getData(ids) {
-    const ids_str = ids.join(',')
-    const url = 'http://localhost:13373/?facility_id=' + ids_str
-    fetch(url)
+    const BACKEND_URL = 'https://qkynjt4nkd.execute-api.us-east-1.amazonaws.com/prod'
+    const data = {
+      facilityIds: ids
+    }
+    fetch(BACKEND_URL, {method: 'post', body: JSON.stringify(data)})
       .then(res => res.json())
       .then(res => {
         this.setState({
-          data: res
+          data: res.map(d => { return {x: d.dates, y: d.fills}})
         })
       })
   }
@@ -34,7 +39,6 @@ class AppComponent extends React.Component {
     this.state = {
       data: []
     }
-    this.getData([2332])
   }
 
   render() {
