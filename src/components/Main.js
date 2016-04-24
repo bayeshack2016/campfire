@@ -12,6 +12,7 @@ class AppComponent extends React.Component {
 
   handleSuggestSelect(event, value) {
     console.log('yoooo, I am here', value);
+    this.getData(value.ids)
   }
 
   getData(ids) {
@@ -29,6 +30,7 @@ class AppComponent extends React.Component {
   constructor() {
     super()
     this.getData = this.getData.bind(this);
+    this.handleSuggestSelect = this.handleSuggestSelect.bind(this);
     this.state = {
       data: []
     }
