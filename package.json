@@ -64,6 +64,7 @@
     "algoliasearch": "^3.13.1",
     "autocomplete.js": "^0.18.0",
     "core-js": "^2.0.0",
+    "fetch": "^1.0.1",
     "normalize.css": "^4.0.0",
     "react": "^15.0.0",
     "react-dom": "^15.0.0",
