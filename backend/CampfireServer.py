@@ -39,7 +39,7 @@ class Handler(BaseHTTPRequestHandler):
         else:
             return {}
 
-    def _fetch_timeseries_from_db(self, facility_id):
+    def _fetch_timeseries_from_db(self, facility_ids):
         """Given a camp facility_id, this method queries the DB and returns the capacity
         timeseries.
 
@@ -48,7 +48,19 @@ class Handler(BaseHTTPRequestHandler):
         Returns:
             A timeseries.
         """
-        return 'This is where the response would go...'
+        print('falife', facility_ids)
+        series1 = {
+            'x': ['2013-10-04 22:23:00', '2013-11-04 22:23:00', '2013-12-04 22:23:00'],
+            'y': [1, 3, 6]
+        }
+        series2 = {
+            'x': ['2013-10-04 22:23:00', '2013-11-04 22:23:00', '2013-12-04 22:23:00'],
+            'y': [2, 1, 2]
+        }
+        if len(facility_ids) == 1:
+            return json.dumps([series1])
+        else:
+            return json.dumps([series1, series2])
 
     def do_GET(self):
         input_vars = self._get_input_vars()
@@ -56,7 +68,8 @@ class Handler(BaseHTTPRequestHandler):
         response = '%s not in input vars.' % (FACILITY_ID,)
         if FACILITY_ID in input_vars:
             logging.info('Necessary key was found in HTTP Get vars.')
-            response = self._fetch_timeseries_from_db(input_vars[FACILITY_ID])
+            fac_ids = input_vars[FACILITY_ID][0].split(',')
+            response = self._fetch_timeseries_from_db(fac_ids)
         self._respond(200, response)
 
 if __name__ == "__main__":
